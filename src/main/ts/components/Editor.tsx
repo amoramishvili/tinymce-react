@@ -12,6 +12,7 @@ export type Version = `${'4' | '5' | '6' | '7'}${'' | '-dev' | '-testing' | `.${
 
 export interface IProps {
   apiKey: string;
+  cloudTinyJs: string;
   id: string;
   inline: boolean;
   initialValue: string;
@@ -217,7 +218,9 @@ export class Editor extends React.Component<IAllProps> {
     // fallback to the cloud when the tinymceScriptSrc is not specified
     const channel = this.props.cloudChannel as Version; // `cloudChannel` is in `defaultProps`, so it's always defined.
     const apiKey = this.props.apiKey ? this.props.apiKey : 'no-api-key';
-    const cloudTinyJs = `https://cdn.tiny.cloud/1/${apiKey}/tinymce/${channel}/tinymce.min.js`;
+    const cloudTinyJs = this.props.cloudTinyJs
+      ? this.props.cloudTinyJs
+      : `https://cdn.tiny.cloud/1/${apiKey}/tinymce/${channel}/tinymce.min.js`;
     return [{ src: cloudTinyJs, async, defer }];
   }
 
